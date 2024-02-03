@@ -21,13 +21,16 @@ public class OrderRepository {
         return em.find(Order.class, id);
     }
 
-    public List<Order> findAll(){
-        return em.createQuery("select o from Order o", Order.class)
+
+
+    public List<Order> findAll(OrderSearch orderSearch){
+        return em.createQuery("select o from Order o join o.member m" +
+                        "where o.status = :status" +
+                        "and m.email like :email", Order.class)
+                .setParameter("status", orderSearch.getOrderStatus())
+                .setParameter("email", orderSearch.getMemberEmail())
+                .setMaxResults(1000) // 최대 1000건
                 .getResultList();
     }
 
-
-    /*
-    public List<Order> findSearch(OrderSearch orderSearch){}
-     */
 }

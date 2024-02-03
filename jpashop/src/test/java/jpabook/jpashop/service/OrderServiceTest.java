@@ -36,10 +36,8 @@ public class OrderServiceTest {
     public void 상품주문() throws Exception {
         //given
         Member member = createMember();
-        em.persist(member);
 
         Item item1 = createItem();
-        em.persist(item1);
 
         Item item2 = new Clothes();
         item2.setName("옷2");
@@ -64,13 +62,25 @@ public class OrderServiceTest {
     }
 
 
+
+
     @Test
     public void 주문취소() throws Exception {
         //given
-        
+        Member member = createMember();
+        Item item = createItem();
+
+        orderItemDTOS.add(new OrderItemDTO(item.getId(),item.getPrice(),2));
+        Long orderId = orderService.order(member.getId(), orderItemDTOS);
         //when
-        
+        orderService.cancelOrder(orderId);
+
         //then
+        Order getOrder = orderRepository.findOne(orderId);
+
+        assertEquals("주문 취소시 상태는 cancel이다", OrderStatus.CANCEL, getOrder.getStatus());
+        assertEquals("재고는 그대로여야한다.", 10, item.getStockQuantity());
+
     }
     
 
@@ -78,6 +88,7 @@ public class OrderServiceTest {
     public void 상품주문_재고수량초과() throws Exception {
         //given
         Member member = createMember();
+        System.out.println(member.getId());
         Item item = createItem();
         orderItemDTOS.add(new OrderItemDTO(item.getId(),item.getPrice(), 11));
         //when
@@ -86,18 +97,20 @@ public class OrderServiceTest {
         fail("재고 ㅜ량 부족 예외가 터져야한다");
     }
 
-    private static Item createItem() {
+    private Item createItem() {
         Item item1 = new Clothes();
         item1.setName("옷1");
         item1.setPrice(10000);
         item1.setStockQuantity(10);
+        em.persist(item1);
         return item1;
     }
 
-    private static Member createMember() {
+    private Member createMember() {
         Member member = new Member();
         member.setEmail("ps123");
         member.setAddress(new Address("서울", "강가", "123-124"));
+        em.persist(member);
         return member;
     }
 

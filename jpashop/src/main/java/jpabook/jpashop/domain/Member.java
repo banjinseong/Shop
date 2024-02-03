@@ -18,6 +18,8 @@ public class Member {
 
     private String email;
 
+    private String password;
+
     @Embedded
     private Address address;
 

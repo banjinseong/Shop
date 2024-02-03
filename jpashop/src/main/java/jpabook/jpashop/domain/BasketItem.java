@@ -22,4 +22,6 @@ public class BasketItem {
     @JoinColumn(name = "item_id")
     private Item item;
 
+    private int count;
+
 }
