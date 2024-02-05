@@ -9,6 +9,9 @@
     <div th:replace="fragments/bodyHeader :: bodyHeader" />
     <div class="jumbotron">
         <h1>HELLO SHOP</h1>
+        <div th:unless="${nickname == null}">
+            <h3>[[${nickname}]]님 환영합니다!</h3>
+        </div>
         <p class="lead">회원 기능</p>
         <p>
             <a class="btn btn-lg btn-secondary" href="/member/join">회원 가입</a>

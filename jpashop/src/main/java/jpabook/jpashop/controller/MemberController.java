@@ -7,6 +7,7 @@ import jpabook.jpashop.domain.Member;
 import jpabook.jpashop.dto.MemberDTO;
 import jpabook.jpashop.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,6 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
+/**
+ * 세션 띄어서 admin권한 확인 하기
+ */
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("member/*")
@@ -38,14 +42,7 @@ public class MemberController {
                 return "member/join";
             }
 
-            Address address = new Address(dto.getCity(), dto.getStreet(), dto.getZipcode());
-
-            Member member = new Member();
-            member.setEmail(dto.getEmail());
-            member.setPassword(dto.getPassword());
-            member.setAddress(address);
-
-            memberService.join(member);
+            memberService.join(dto);
 
             return "redirect:/";
         } catch (IllegalStateException e) {
@@ -60,5 +57,11 @@ public class MemberController {
         List<Member> members = memberService.findMembers();
         model.addAttribute("members", members);
         return "member/list";
+    }
+
+    @GetMapping("/login")
+    public String loginPage(Model model) {
+        model.addAttribute("memberDTO", new MemberDTO());
+        return "member/login";
     }
 }

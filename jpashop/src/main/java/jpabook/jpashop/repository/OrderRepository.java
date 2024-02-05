@@ -9,6 +9,9 @@ import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
+/**
+ * 주문검색 쿼리메소드 사용해보기
+ */
 public class OrderRepository {
 
     private final EntityManager em;

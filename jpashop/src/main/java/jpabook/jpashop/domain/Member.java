@@ -1,8 +1,8 @@
 package jpabook.jpashop.domain;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+import org.springframework.boot.autoconfigure.elasticsearch.ElasticsearchConnectionDetails;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +10,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
+//@NoArgsConstructor(access = AccessLevel.PROTECTED) 임의로 생성 못하게 막기
 public class Member {
     @Id
     @GeneratedValue
@@ -23,10 +24,21 @@ public class Member {
     @Embedded
     private Address address;
 
+    @Enumerated(EnumType.STRING)
+    private UserRole userRole;
+
     @OneToMany(mappedBy = "member")
     private List<Order> orders = new ArrayList<>();
 
     @OneToMany(mappedBy = "member")
     private List<Basket> baskets = new ArrayList<>();
 
+    protected Member(){}
+    @Builder
+    public Member(String email, String password, Address address){
+        this.email = email;
+        this.password = password;
+        this.userRole = UserRole.USER;
+        this.address = address;
+    }
 }

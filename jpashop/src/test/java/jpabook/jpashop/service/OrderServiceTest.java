@@ -31,11 +31,11 @@ public class OrderServiceTest {
     List<OrderItemDTO> orderItemDTOS = new ArrayList<>();
     @Autowired
     OrderRepository orderRepository;
-    
+
     @Test
     public void 상품주문() throws Exception {
         //given
-        Member member = createMember();
+        Member member = createMember2();
 
         Item item1 = createItem();
 
@@ -67,7 +67,7 @@ public class OrderServiceTest {
     @Test
     public void 주문취소() throws Exception {
         //given
-        Member member = createMember();
+        Member member = createMember2();
         Item item = createItem();
 
         orderItemDTOS.add(new OrderItemDTO(item.getId(),item.getPrice(),2));
@@ -82,12 +82,12 @@ public class OrderServiceTest {
         assertEquals("재고는 그대로여야한다.", 10, item.getStockQuantity());
 
     }
-    
+
 
     @Test(expected = NotEnoughStockException.class)
     public void 상품주문_재고수량초과() throws Exception {
         //given
-        Member member = createMember();
+        Member member = createMember2();
         System.out.println(member.getId());
         Item item = createItem();
         orderItemDTOS.add(new OrderItemDTO(item.getId(),item.getPrice(), 11));
@@ -106,7 +106,7 @@ public class OrderServiceTest {
         return item1;
     }
 
-    private Member createMember() {
+    private Member createMember2() {
         Member member = new Member();
         member.setEmail("ps123");
         member.setAddress(new Address("서울", "강가", "123-124"));

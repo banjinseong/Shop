@@ -1,0 +1,37 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header" />
+<style>
+ .fieldError {
+ border-color: #bd2130;
+ }
+</style>
+<body>
+<div class="container">
+  <div th:replace="fragments/bodyHeader :: bodyHeader"/>
+    <h2>로그인</h2>
+  <form role="form" action="/member/login" th:object="${memberDTO}" method="post">
+      <div>
+        <label th:for="email">로그인 이메일 : </label>
+        <input type="text" th:field="*{email}"/>
+      </div>
+      <br/>
+      <div>
+        <label th:for="password">비밀번호 : </label>
+        <input type="password" th:field="*{password}"/>
+      </div>
+      <div th:if="${#fields.hasGlobalErrors()}">
+        <br/>
+        <div class="error-class" th:each="error : ${#fields.globalErrors()}" th:text="${error}" />
+      </div>
+      <br/>
+      <button type="submit">로그인</button>
+      <button type="button" th:onclick="/member/join">회원 가입</button> <br/><br/>
+    </form>
+  <div th:replace="fragments/footer :: footer" />
+
+</div>
+
+</body>
+</html>
+
