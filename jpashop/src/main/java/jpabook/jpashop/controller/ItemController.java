@@ -7,9 +7,7 @@ import jpabook.jpashop.service.ItemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -28,16 +26,28 @@ public class ItemController {
 
     @PostMapping("new")
     public String itemPost(ClothesDTO dto){
-        Clothes clothes = new Clothes();
-        clothes.setName(dto.getName());
-        clothes.setPrice(dto.getPrice());
-        clothes.setStockQuantity(dto.getStockQuantity());
-        clothes.setSize(dto.getSize());
-        clothes.setWear(dto.getWear());
 
-        itemService.saveItem(clothes);
+        itemService.saveItem(dto);
         return "redirect:/item/list";
 
+    }
+
+    @GetMapping(value = "{itemId}/edit")
+    public String updateItemForm(@PathVariable("itemId") Long itemId, Model
+            model) {
+        Clothes form = (Clothes) itemService.findOne(itemId);
+
+        model.addAttribute("form", form);
+        return "item/update";
+    }
+    /**
+     * 상품 수정
+     */
+    @PostMapping(value = "{itemId}/edit")
+    public String updateItem(@PathVariable("itemId") Long itemId, @ModelAttribute("form") ClothesDTO form) {
+        itemService.updateItem(itemId, form);
+
+        return "redirect:/item/list";
     }
 
     @GetMapping("list")

@@ -3,6 +3,7 @@ package jpabook.jpashop.domain.item;
 import jakarta.persistence.*;
 import jpabook.jpashop.domain.Category;
 import jpabook.jpashop.exception.NotEnoughStockException;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -28,6 +29,15 @@ public abstract class Item {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
     private Category category;
+
+    protected Item(){}
+
+    public Item(String name, int price, int stockQuantity){
+        this.name = name;
+        this.price = price;
+        this.stockQuantity = stockQuantity;
+        this.created_date = LocalDateTime.now();
+    }
 
     public void addCount(int quantity){
         this.stockQuantity += quantity;

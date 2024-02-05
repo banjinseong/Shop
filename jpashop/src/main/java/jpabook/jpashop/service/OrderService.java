@@ -47,7 +47,7 @@ public class OrderService {
         //주문상품 생성
         List<OrdersItem> ordersItems = new ArrayList<>();
         for(OrderItemDTO orderItemDTO : orderItemDTOS){
-            Item item = itemRepository.findOne(orderItemDTO.getItemId());
+            Item item = itemRepository.findById(orderItemDTO.getItemId()).get();
             int price = orderItemDTO.getPrice();
             int count = orderItemDTO.getCount();
 
