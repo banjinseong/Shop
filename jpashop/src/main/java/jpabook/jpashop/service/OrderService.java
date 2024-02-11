@@ -31,9 +31,9 @@ public class OrderService {
      * 주문
      */
     @Transactional
-    public Long order(Long memberId, List<OrderItemDTO> orderItemDTOS){
+    public Long order(String email, List<OrderItemDTO> orderItemDTOS){
         //엔티티 조회
-        Optional<Member> optionalMember = memberRepository.findById(memberId);
+        Optional<Member> optionalMember = memberRepository.findByEmail(email);
 
         if (optionalMember.isPresent()) {
             Member member = optionalMember.get();
@@ -48,8 +48,8 @@ public class OrderService {
         List<OrdersItem> ordersItems = new ArrayList<>();
         for(OrderItemDTO orderItemDTO : orderItemDTOS){
             Item item = itemRepository.findById(orderItemDTO.getItemId()).get();
-            int price = orderItemDTO.getPrice();
             int count = orderItemDTO.getCount();
+            int price = orderItemDTO.getPrice();
 
             OrdersItem ordersItem = OrdersItem.createOrdersItem(item, price, count);
             ordersItems.add(ordersItem);
@@ -76,9 +76,9 @@ public class OrderService {
     @Transactional
     public void cancelOrder(Long orderId){
         //주문 엔티티 조회
-        Order order = orderRepository.findOne(orderId);
+        Optional<Order> order = orderRepository.findById(orderId);
         // 주문 취소
-        order.cancel();
+        order.get().cancel();
 
     }
 

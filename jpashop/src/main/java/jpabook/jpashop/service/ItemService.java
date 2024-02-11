@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true)
@@ -34,8 +35,13 @@ public class ItemService {
     }
 
 
-    public Item findOne(Long itemId){
-        return itemRepository.findById(itemId).get();
+    public ClothesDTO findOne(Long itemId){
+        Item id = itemRepository.findById(itemId).get();
+        ClothesDTO dto = new ClothesDTO();
+        dto.setName(id.getName());
+        dto.setPrice(id.getPrice());
+        dto.setStockQuantity(id.getStockQuantity());
+        return dto;
     }
 
     public List<Item> findAll(){

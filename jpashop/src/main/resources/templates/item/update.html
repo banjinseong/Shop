@@ -6,7 +6,7 @@
   <div th:replace="fragments/bodyHeader :: bodyHeader"/>
   <form th:object="${form}" method="post">
     <!-- id -->
-    <input type="hidden" th:field="*{id}" />
+    <input type="hidden" th:field="${id}" />
     <div class="form-group">
       <label th:for="name">상품명</label>
       <input type="text" th:field="*{name}" class="form-control"
@@ -20,16 +20,6 @@
     <div class="form-group">
       <label th:for="stockQuantity">수량</label>
       <input type="number" th:field="*{stockQuantity}" class="form-control" placeholder="수량을 입력하세요" />
-    </div>
-    <div class="form-group">
-      <label th:for="size">사이즈</label>
-      <input type="text" th:field="*{size}" class="form-control"
-             placeholder="사이즈를 입력하세요">
-    </div>
-    <div class="form-group">
-      <label th:for="wear">부의</label>
-      <input type="text" th:field="*{wear}" class="form-control"
-             placeholder="부의을 입력하세요">
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
   </form>

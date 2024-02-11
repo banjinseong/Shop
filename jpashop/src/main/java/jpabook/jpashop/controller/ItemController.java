@@ -32,12 +32,15 @@ public class ItemController {
 
     }
 
+    /**
+     * 서비스 가서 dto로 반환하게 하자
+     */
     @GetMapping(value = "{itemId}/edit")
-    public String updateItemForm(@PathVariable("itemId") Long itemId, Model
-            model) {
-        Clothes form = (Clothes) itemService.findOne(itemId);
+    public String updateItemForm(@PathVariable("itemId") Long itemId, Model model) {
+        ClothesDTO form = itemService.findOne(itemId);
 
         model.addAttribute("form", form);
+        model.addAttribute("id", itemId);
         return "item/update";
     }
     /**
@@ -56,5 +59,14 @@ public class ItemController {
 
         model.addAttribute("items", items);
         return "item/list";
+    }
+
+    @GetMapping(value = "{itemId}/view")
+    public String getView(@PathVariable("itemId") Long itemId, Model model){
+        ClothesDTO form = itemService.findOne(itemId);
+
+        model.addAttribute("form", form);
+        model.addAttribute("itemId", itemId);
+        return "item/view";
     }
 }
