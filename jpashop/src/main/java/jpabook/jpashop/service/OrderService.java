@@ -8,8 +8,10 @@ import jpabook.jpashop.repository.MemberRepository;
 import jpabook.jpashop.repository.OrderRepository;
 import jpabook.jpashop.repository.OrderSearch;
 import lombok.RequiredArgsConstructor;
+import org.aspectj.weaver.ast.Or;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -86,7 +88,7 @@ public class OrderService {
      * 검색
      */
 
-//    public List<Order> findOrders(OrderSearch orderSearch){
-//        return orderRepository.find
-//    }
+    public List<Order> findAllByString(OrderSearch orderSearch) {
+        return orderRepository.findByEmailAndStatus(orderSearch.getMemberEmail(),orderSearch.getOrderStatus());
+    }
 }

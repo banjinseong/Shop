@@ -13,11 +13,6 @@ public class OrderItemDTO {
     private int count;
 
 
-    public OrderItemDTO(Long itemId, int price, int count){
-        this.itemId = itemId;
-        this.price = price;
-        this.count = count;
-    }
 
     private List<OrderItemDTO> orderItemList;
 }
