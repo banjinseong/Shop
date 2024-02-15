@@ -15,6 +15,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -45,7 +46,8 @@ public class OrderController {
      */
     @PostMapping("orderForm")
     public String order(@AuthenticationPrincipal PrincipalDetails principalDetails,
-                        @ModelAttribute("items") OrderItemDTOList orderItems)
+                        @ModelAttribute("items") OrderItemDTOList orderItems,
+                        RedirectAttributes redirectAttributes)
     {
         String email = principalDetails.getUsername();// 회원의 이메일을 가져온다.
         List<OrderItemDTO> dto = orderItems.getItems();
@@ -54,9 +56,11 @@ public class OrderController {
         for(OrderItemDTO itemDTO : dto){
             basketService.delete(email, itemDTO.getItemId());
         }
-        orderService.order(email, dto);
-        return "redirect:/";
+        Long orderId = orderService.order(email, dto);
+        return "redirect:/order/success?id=" + orderId;
     }
+
+
 
     @GetMapping("orderList")
     public String getList(@ModelAttribute("orderSearch")OrderSearch orderSearchModel,
@@ -70,6 +74,17 @@ public class OrderController {
     public String cancelOrder(@PathVariable("orderId") Long orderId) {
         orderService.cancelOrder(orderId);
         return "redirect:/order/orderList";
+    }
+
+    /**
+     * 주문완료 페이지
+     */
+    @GetMapping("/order/success")
+    public String success(@RequestParam("id") Long id,
+                          Model model) {
+        Order order = orderService.findById(id);
+        model.addAttribute("order", order);
+        return "order/success";
     }
 
 }

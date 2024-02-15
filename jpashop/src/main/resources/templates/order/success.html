@@ -1,0 +1,31 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header" />
+<body>
+<div class="container">
+  <div th:replace="fragments/bodyHeader :: bodyHeader"/>
+    <div class="form-group">
+      <label>주문 완료!!!</label>
+      <table class="table table-striped">
+        <thead>
+        <tr>
+          <th>이름</th>
+          <th>주문가격</th>
+          <th>대표상품 주문수량</th>
+          <th th:text="'주문날짜: ' + ${order.orderDate}"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="item : ${order.ordersItems}">
+          <td th:text="${item.item.name}"></td>
+          <td th:text="${item.orderPrice}"></td>
+          <td th:text="${item.count}"></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  <br/>
+  <div th:replace="fragments/footer :: footer" />
+</div> <!-- /container -->
+</body>
+</html>

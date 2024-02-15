@@ -35,11 +35,7 @@ public class OrderService {
     @Transactional
     public Long order(String email, List<OrderItemDTO> orderItemDTOS){
         //엔티티 조회
-        Optional<Member> optionalMember = memberRepository.findByEmail(email);
-
-        if (optionalMember.isPresent()) {
-            Member member = optionalMember.get();
-            // 아이디가 memberId에 해당하는 회원을 찾았을 때 수행할 작업
+        Member member = memberRepository.findByEmail(email).get();
 
         //배송정보 생성
         Delivery delivery = new Delivery();
@@ -63,11 +59,7 @@ public class OrderService {
         //주문 저장
         orderRepository.save(order);
         return order.getId();
-        } else {
-            return 1l;
-            // 아이디가 memberId에 해당하는 회원을 찾지 못했을 때 수행할 작업
-            // 예를 들어, 예외를 발생시키거나 메시지를 출력하고 컨트롤러로 이동하는 등의 작업을 수행할 수 있습니다.
-        }
+
     }
 
 
@@ -90,5 +82,9 @@ public class OrderService {
 
     public List<Order> findAllByString(OrderSearch orderSearch) {
         return orderRepository.findByEmailAndStatus(orderSearch.getMemberEmail(),orderSearch.getOrderStatus());
+    }
+
+    public Order findById(Long id){
+        return orderRepository.findById(id).get();
     }
 }

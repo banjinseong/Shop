@@ -27,9 +27,9 @@
       <thead>
       <tr>
         <th>#</th>
-        <th>회원명</th>
+        <th>상세정보</th>
         <th>대표상품 이름</th>
-        <th>대표상품 주문가격</th>
+        <th>총 주문가격</th>
         <th>대표상품 주문수량</th>
         <th>상태</th>
         <th>일시</th>
@@ -39,9 +39,21 @@
       <tbody>
       <tr th:each="item : ${orders}">
         <td th:text="${item.id}"></td>
-        <td th:text="${item.member.email}"></td>
-        <td th:text="${item.ordersItems[0].item.name}"></td>
-        <td th:text="${item.ordersItems[0].orderPrice}"></td>
+        <td>
+          <a th:if="${item.status.name() == 'ORDER'}" href="#"
+             th:href="'javascript:goToOrderSuccess('+${item.id}+')'">주문 정보</a>
+        </td>
+        <td>
+          <span th:if="${item.ordersItems.size() > 1}">
+            <span th:text="${item.ordersItems[0].item.name} + ', '"></span>
+              <span> 그 외 <span th:text="${item.ordersItems.size() - 1}"></span>개</span>
+          </span>
+                <!-- OrderItem이 1개일 때 -->
+          <span th:unless="${item.ordersItems.size() > 1}">
+              <span th:text="${item.ordersItems[0].item.name}"></span>
+          </span>
+        </td>
+        <td th:text="${item.getTotalPrice()}"></td>
         <td th:text="${item.ordersItems[0].count}"></td>
         <td th:text="${item.status}"></td>
         <td th:text="${item.orderDate}"></td>
@@ -64,6 +76,10 @@
  form.setAttribute("action", "/order/" + id + "/cancel");
  document.body.appendChild(form);
  form.submit();
+ }
+
+ function goToOrderSuccess(id) {
+    window.location.href = "/order/success?id=" + id;
  }
 </script>
 </html>

@@ -4,6 +4,7 @@
 <body>
 <div class="container">
     <div th:replace="fragments/bodyHeader :: bodyHeader" />
+    <form role="form" action="/order/orderForm" method="post">
     <div>
         <table class="table table-striped">
             <thead>
@@ -17,6 +18,11 @@
             </thead>
             <tbody>
             <tr th:each="basket, i : ${baskets}">
+                <input type="hidden" th:name="'items[' + ${i.index} + '].itemId'" th:value="${basket.getItem().getId()}" />
+                <input type="hidden" th:name="'items[' + ${i.index} + '].price'" th:value="${basket.getItem().getPrice()}" />
+                <input type="hidden" th:name="'items[' + ${i.index} + '].name'" th:value="${basket.getItem().getName()}" />
+                <input type="hidden" th:name="'items[' + ${i.index} + '].count'" th:value="${basket.getCount()}" />
+
                 <td th:text="${i.count}">1</td>
                 <td th:text="${basket.getItem().getId()}"></td>
                 <td th:text="${basket.getItem().getName()}"></td>
@@ -29,7 +35,9 @@
             </tr>
             </tbody>
         </table>
+        <button type="submit" class="w-100 btn btn-lg btn-outline-primary">구매하기</button>
     </div>
+    </form>
     <div th:replace="fragments/footer :: footer" />
 </div> <!-- /container -->
 </body>
