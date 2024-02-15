@@ -18,7 +18,7 @@
             <tbody>
             <tr th:each="item : ${items}">
                 <td th:text="${item.id}"></td>
-                <td th:text="${item.name}"></td>
+                <td><a th:href="@{/item/{id}/view (id=${item.id})}" th:text="${item.name}"></a></td>
                 <td th:text="${item.price}"></td>
                 <td th:text="${item.stockQuantity}"></td>
                 <td>
@@ -26,7 +26,7 @@
                        class="btn btn-primary" role="button">수정</a>
                 </td>
                 <td>
-                    <a href="#" th:href="@{/item/{id}/view (id=${item.id})}"
+                    <a href="#" th:href="@{/item/{id}/order (id=${item.id})}"
                        class="btn btn-primary" role="button">주문</a>
                 </td>
             </tr>

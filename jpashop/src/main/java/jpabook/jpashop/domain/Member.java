@@ -30,8 +30,8 @@ public class Member {
     @OneToMany(mappedBy = "member")
     private List<Order> orders = new ArrayList<>();
 
-    @OneToMany(mappedBy = "member")
-    private List<Basket> baskets = new ArrayList<>();
+    @OneToOne(mappedBy = "member")
+    private Basket baskets;
 
     protected Member(){}
     @Builder

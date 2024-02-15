@@ -61,6 +61,15 @@ public class ItemController {
         return "item/list";
     }
 
+    @GetMapping(value = "{itemId}/order")
+    public String getOrder(@PathVariable("itemId") Long itemId, Model model){
+        ClothesDTO form = itemService.findOne(itemId);
+
+        model.addAttribute("form", form);
+        model.addAttribute("itemId", itemId);
+        return "item/order";
+    }
+
     @GetMapping(value = "{itemId}/view")
     public String getView(@PathVariable("itemId") Long itemId, Model model){
         ClothesDTO form = itemService.findOne(itemId);

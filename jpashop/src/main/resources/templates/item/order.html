@@ -4,7 +4,7 @@
 <body>
 <div class="container">
   <div th:replace="fragments/bodyHeader :: bodyHeader"/>
-  <form th:action="@{/basket/{id}/takeIt (id=${itemId})}" th:object="${form}" method="post">
+  <form th:action="@{/order/orderInsert}" th:object="${form}" method="post">
     <!-- id -->
     <input type="hidden" th:value="${itemId}" name="itemId" />
     <div class="form-group">
@@ -19,7 +19,7 @@
       <label th:for="count">주문 수량</label>
       <input type="number" name="count" class="form-control" placeholder="수량을 입력하세요" />
     </div>
-    <button type="submit" class="btn btn-primary">장바구니</button>
+    <button type="submit" class="btn btn-primary">Submit</button>
   </form>
   <div th:replace="fragments/footer :: footer" />
 </div> <!-- /container -->

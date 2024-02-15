@@ -15,10 +15,16 @@ public class Basket {
     @Column(name = "basket_id")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @OneToMany(mappedBy = "basket")
+    @OneToMany(mappedBy = "basket", cascade = CascadeType.ALL)
     private List<BasketItem> basketItems = new ArrayList<>();
+
+    public static Basket createBasket(Member member){
+        Basket basket = new Basket();
+        basket.setMember(member);
+        return basket;
+    }
 }

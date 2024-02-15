@@ -6,6 +6,7 @@ import jpabook.jpashop.domain.PrincipalDetails;
 import jpabook.jpashop.dto.OrderItemDTO;
 import jpabook.jpashop.dto.OrderItemDTOList;
 import jpabook.jpashop.repository.OrderSearch;
+import jpabook.jpashop.service.BasketService;
 import jpabook.jpashop.service.ItemService;
 import jpabook.jpashop.service.MemberService;
 import jpabook.jpashop.service.OrderService;
@@ -23,7 +24,7 @@ import java.util.List;
 public class OrderController {
 
     private final OrderService orderService;
-    private final ItemService itemService;
+    private final BasketService basketService;
 
     /**
      * 아이템 정보를 가변적으로 받아야하는데... 어떻게 받아오지
@@ -48,6 +49,11 @@ public class OrderController {
     {
         String email = principalDetails.getUsername();// 회원의 이메일을 가져온다.
         List<OrderItemDTO> dto = orderItems.getItems();
+
+        //주문시 장바구니 아이템 삭제
+        for(OrderItemDTO itemDTO : dto){
+            basketService.delete(email, itemDTO.getItemId());
+        }
         orderService.order(email, dto);
         return "redirect:/";
     }

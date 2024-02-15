@@ -24,4 +24,16 @@ public class BasketItem {
 
     private int count;
 
+    public static BasketItem createBasketItem(Basket basket, Item item, int count){
+        BasketItem basketItem = new BasketItem();
+        basketItem.setBasket(basket);
+        basketItem.item = item;
+        basketItem.count = count;
+        return basketItem;
+    }
+
+    public void addCount(int count){
+        this.count += count;
+    }
+
 }

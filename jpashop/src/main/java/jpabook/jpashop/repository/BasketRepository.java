@@ -2,18 +2,16 @@ package jpabook.jpashop.repository;
 
 import jakarta.persistence.EntityManager;
 import jpabook.jpashop.domain.Basket;
+import jpabook.jpashop.domain.Member;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
-@RequiredArgsConstructor
-public class BasketRepository {
+public interface BasketRepository extends JpaRepository<Basket, Long> {
 
-    private final EntityManager em;
+    Optional<Basket> findByMember(Member member);
 
-    public void save(Basket basket){
-        em.persist(basket);
-    }
-
-    //조회
 }
