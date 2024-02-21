@@ -1,6 +1,7 @@
 package jpabook.jpashop.domain;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
@@ -18,10 +19,7 @@ public class PrincipalDetails implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Collection<GrantedAuthority> collections = new ArrayList<>();
-        collections.add(() -> {
-            return member.getUserRole().name();
-        });
-
+        collections.add(new SimpleGrantedAuthority(member.getUserRole().name()));
         return collections;
     }
 
