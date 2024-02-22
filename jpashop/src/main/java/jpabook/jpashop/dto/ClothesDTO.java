@@ -4,6 +4,9 @@ import jpabook.jpashop.domain.item.Clothes;
 import jpabook.jpashop.domain.item.Item;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @Setter @Getter
 public class ClothesDTO {
@@ -14,6 +17,8 @@ public class ClothesDTO {
 
     private String size;
     private String wear;
+
+    private List<MultipartFile> multipartFiles;
 
     public Clothes toEntity(){
         return Clothes.builder()

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -25,7 +26,7 @@ public class ItemController {
     }
 
     @PostMapping("new")
-    public String itemPost(ClothesDTO dto){
+    public String itemPost(ClothesDTO dto) throws IOException {
 
         itemService.saveItem(dto);
         return "redirect:/item/list";
