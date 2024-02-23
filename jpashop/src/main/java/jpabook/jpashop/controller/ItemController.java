@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
@@ -26,9 +27,9 @@ public class ItemController {
     }
 
     @PostMapping("new")
-    public String itemPost(ClothesDTO dto) throws IOException {
+    public String itemPost(ClothesDTO dto, @RequestParam("file") MultipartFile[] multipartFiles) throws IOException {
 
-        itemService.saveItem(dto);
+        itemService.saveItem(dto, multipartFiles);
         return "redirect:/item/list";
 
     }

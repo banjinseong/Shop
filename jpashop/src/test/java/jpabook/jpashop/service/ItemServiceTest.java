@@ -47,13 +47,13 @@ public class ItemServiceTest {
         clothesDTO.setStockQuantity(10);
         clothesDTO.setPrice(10000);
        MultipartFile file = createMockMultipartFile("C:/img/dog.jpg");
-        List<MultipartFile> multipartFiles = new ArrayList<>();
-        multipartFiles.add(file);
-        clothesDTO.setImages(multipartFiles);
+        MultipartFile[] files = new MultipartFile[1];
+        files[0] = file;
+
         //when
 
 
-        Long itemId = itemService.saveItem(clothesDTO);
+        Long itemId = itemService.saveItem(clothesDTO, files);
         ItemImage itemImage = itemRepository.findById(itemId).get().getImages().get(0);
         //then
         System.out.println("*****"+itemImage.getId());

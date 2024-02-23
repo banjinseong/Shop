@@ -2,6 +2,7 @@ package jpabook.jpashop.dto;
 
 import jpabook.jpashop.domain.item.Clothes;
 import jpabook.jpashop.domain.item.Item;
+import jpabook.jpashop.domain.item.ItemImage;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.web.multipart.MultipartFile;
@@ -18,7 +19,7 @@ public class ClothesDTO {
     private String size;
     private String wear;
 
-    private List<MultipartFile> images;
+    private List<ItemImage> images;
 
     public Clothes toEntity(){
         return Clothes.builder()

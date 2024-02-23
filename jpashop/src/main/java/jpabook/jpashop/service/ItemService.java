@@ -28,7 +28,7 @@ public class ItemService {
 
 
     @Transactional
-    public Long saveItem(ClothesDTO dto) throws IOException {
+    public Long saveItem(ClothesDTO dto, MultipartFile[] multipartFiles) throws IOException {
         Clothes item = (Clothes) dto.toEntity();
         Resource resourcePath = resourceLoader.getResource("classpath:/static/img/");
 
@@ -40,8 +40,11 @@ public class ItemService {
         String directoryPath = directory.getAbsolutePath();
         System.out.println("*******");
 
-        if(!Objects.isNull(dto.getImages())){
-            for(MultipartFile file : dto.getImages()){
+        if(!Objects.isNull(multipartFiles)){
+            for(MultipartFile file : multipartFiles){
+                if(file.isEmpty()){
+                    break;
+                }
                 String originName = file.getOriginalFilename();
 
                 //식별자 번호 추가
@@ -53,7 +56,8 @@ public class ItemService {
                 //이미지 저장
                 file.transferTo(new File(imgUrl));
 
-                ItemImage itemImage = ItemImage.createImage(originName,imgName,imgUrl);
+                //url호출할때는 시작점을 상대주소로 호출(전체경로로 하면 안나와서 일단 이렇게)
+                ItemImage itemImage = ItemImage.createImage(originName,imgName,"/img/" + imgName);
                 item.addImages(itemImage);
             }
         }
@@ -80,6 +84,7 @@ public class ItemService {
         dto.setName(id.getName());
         dto.setPrice(id.getPrice());
         dto.setStockQuantity(id.getStockQuantity());
+        dto.setImages(id.getImages());
         return dto;
     }
 

@@ -11,6 +11,14 @@
       <label th:for="name">상품명</label>
       <input type="text" class="form-control" th:field="*{name}" readonly/>
     </div>
+    <div th:if="${form.images != null}">
+      <label class="form-label">Images</label>
+      <div>
+        <th:block th:each="image : ${form.images}">
+          <img th:src="${image.imgUrl}" alt="Image" width="200px" height="200px">
+        </th:block>
+      </div>
+    </div>
     <div class="form-group">
       <label th:for="price">주문 가격</label>
       <input type="number" class="form-control" th:field="*{price}" readonly/>
@@ -21,6 +29,8 @@
     </div>
     <button type="submit" class="btn btn-primary">장바구니</button>
   </form>
+  <a href="#" th:href="@{/item/{id}/order (id=${itemId})}"
+     class="btn btn-primary" role="button">주문</a>
   <div th:replace="fragments/footer :: footer" />
 </div> <!-- /container -->
 </body>
