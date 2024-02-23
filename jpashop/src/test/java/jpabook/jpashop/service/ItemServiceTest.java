@@ -47,8 +47,9 @@ public class ItemServiceTest {
         clothesDTO.setStockQuantity(10);
         clothesDTO.setPrice(10000);
        MultipartFile file = createMockMultipartFile("C:/img/dog.jpg");
-        MultipartFile[] multipartFiles = new MultipartFile[1];
-        multipartFiles[0] = file;
+        List<MultipartFile> multipartFiles = new ArrayList<>();
+        multipartFiles.add(file);
+        clothesDTO.setImages(multipartFiles);
         //when
 
 

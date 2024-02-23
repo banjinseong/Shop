@@ -18,7 +18,7 @@ public class ClothesDTO {
     private String size;
     private String wear;
 
-    private List<MultipartFile> multipartFiles;
+    private List<MultipartFile> images;
 
     public Clothes toEntity(){
         return Clothes.builder()

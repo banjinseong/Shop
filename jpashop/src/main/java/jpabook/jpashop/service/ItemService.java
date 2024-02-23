@@ -30,7 +30,6 @@ public class ItemService {
     @Transactional
     public Long saveItem(ClothesDTO dto) throws IOException {
         Clothes item = (Clothes) dto.toEntity();
-        List<ItemImage> images = new ArrayList<>();
         Resource resourcePath = resourceLoader.getResource("classpath:/static/img/");
 
         //해당 path에 폴더가 없으면 읽지를 못한다(리소스경로를우째절대경로로..)
@@ -39,10 +38,10 @@ public class ItemService {
             directory.mkdirs(); // 폴더 생성
         }
         String directoryPath = directory.getAbsolutePath();
+        System.out.println("*******");
 
-
-        if(!Objects.isNull(dto.getMultipartFiles())){
-            for(MultipartFile file : dto.getMultipartFiles()){
+        if(!Objects.isNull(dto.getImages())){
+            for(MultipartFile file : dto.getImages()){
                 String originName = file.getOriginalFilename();
 
                 //식별자 번호 추가
@@ -50,14 +49,15 @@ public class ItemService {
                 String imgName = uuid + "_" + originName;
 
                 String imgUrl = directoryPath + "/" + imgName;
+
                 //이미지 저장
                 file.transferTo(new File(imgUrl));
 
                 ItemImage itemImage = ItemImage.createImage(originName,imgName,imgUrl);
-                images.add(itemImage);
+                item.addImages(itemImage);
             }
         }
-        item.setImages(images);
+
 
         itemRepository.save(item);
 

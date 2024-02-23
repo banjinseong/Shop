@@ -56,4 +56,13 @@ public abstract class Item {
         }
         this.stockQuantity -= quantity;
     }
+
+    /**
+     * 연관관계 메서드
+     */
+    public void addImages(ItemImage image) {
+        images.add(image);
+        image.setItem(this);
+    }
+
 }
