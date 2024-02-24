@@ -20,12 +20,18 @@ public class ItemController {
 
     private final ItemService itemService;
 
+    /**
+     * 아이템 등록 페이지 진입
+     */
     @GetMapping("new")
     public String itemGet(Model model){
         model.addAttribute("dto", new ClothesDTO());
         return "item/new";
     }
 
+    /**
+     * 아이템 등록시
+     */
     @PostMapping("new")
     public String itemPost(ClothesDTO dto, @RequestParam("file") MultipartFile[] multipartFiles) throws IOException {
 
@@ -35,6 +41,7 @@ public class ItemController {
     }
 
     /**
+     * 아이템 수정페이지 진입
      * 서비스 가서 dto로 반환하게 하자
      */
     @GetMapping(value = "{itemId}/edit")
@@ -55,6 +62,9 @@ public class ItemController {
         return "redirect:/item/list";
     }
 
+    /**
+     * 아이템 목록 페이지
+     */
     @GetMapping("list")
     public String itemList(Model model){
         List<Item> items = itemService.findAll();
@@ -62,6 +72,10 @@ public class ItemController {
         model.addAttribute("items", items);
         return "item/list";
     }
+
+    /**
+     * 아이템 주문페이지 진입
+     */
 
     @GetMapping(value = "{itemId}/order")
     public String getOrder(@PathVariable("itemId") Long itemId, Model model){
@@ -71,6 +85,10 @@ public class ItemController {
         model.addAttribute("itemId", itemId);
         return "item/order";
     }
+
+    /**
+     * 아이템 상세 페이지 진입
+     */
 
     @GetMapping(value = "{itemId}/view")
     public String getView(@PathVariable("itemId") Long itemId, Model model){

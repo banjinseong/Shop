@@ -34,6 +34,9 @@ public class BasketController {
         return "basket/baskets";
     }
 
+    /**
+     *장바구니에서 주문할때
+     */
     @PostMapping("basketOrder")
     public String createForm(Model model,
                              @ModelAttribute("items") OrderItemDTOList orderItems){

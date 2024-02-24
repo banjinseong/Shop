@@ -27,12 +27,18 @@ public class MemberController {
 
     private final MemberService memberService;
 
+    /**
+     * 회원가입 페이지 진입
+     */
     @GetMapping("join")
     public String joinGet(Model model){
         model.addAttribute("memberDTO", new MemberDTO());
         return "member/join";
     }
 
+    /**
+     *회원가입시
+     */
     @PostMapping("join")
     public String joinPost(Model model, @Valid MemberDTO dto, BindingResult result){
 
@@ -52,6 +58,9 @@ public class MemberController {
 
     }
 
+    /**
+     *회원 목록 페이지(관리자만 들어가게끔)
+     */
     @GetMapping("/list")
     public String memberList(Model model){
         List<Member> members = memberService.findMembers();
@@ -59,6 +68,9 @@ public class MemberController {
         return "member/list";
     }
 
+    /**
+     *로그인 페이지 진입(로그인 post는 시큐리티가 처리, 로그아웃도)
+     */
     @GetMapping("/login")
     public String loginPage(Model model) {
         model.addAttribute("memberDTO", new MemberDTO());

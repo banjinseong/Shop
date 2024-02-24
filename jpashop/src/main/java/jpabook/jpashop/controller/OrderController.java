@@ -28,9 +28,7 @@ public class OrderController {
     private final BasketService basketService;
 
     /**
-     * 아이템 정보를 가변적으로 받아야하는데... 어떻게 받아오지
-     * dto로 받아와서 dto로 보여줄거
-     * post로 받아오자
+     *아이템 주문페이지에서 주문 확인 페이지로 넘어옴
      */
     @PostMapping("orderInsert")
     public String createForm(Model model,@ModelAttribute OrderItemDTO orderItems){
@@ -42,7 +40,6 @@ public class OrderController {
     /**
      * 나중에 폼을 바꿔서 받는 변수를 달리할거니 일단 더러워
      * 수량 오류 터지는것도 try catch써서 잡기
-     * 오더 서비스 long으로 받아서 url에 번호 넣고 주문 내역 보여주는 페이지로 이동하자
      */
     @PostMapping("orderForm")
     public String order(@AuthenticationPrincipal PrincipalDetails principalDetails,
@@ -61,7 +58,10 @@ public class OrderController {
     }
 
 
-
+    /**
+     * 주문 목록 보여주기
+     * 관리자,유저 전용으로 나누어야할듯?(유저 전용 하나 만들어보자)
+     */
     @GetMapping("orderList")
     public String getList(@ModelAttribute("orderSearch")OrderSearch orderSearchModel,
                           Model model){
@@ -70,6 +70,9 @@ public class OrderController {
         return "order/list";
     }
 
+    /**
+     * 주문 취소
+     */
     @PostMapping(value = "/{orderId}/cancel")
     public String cancelOrder(@PathVariable("orderId") Long orderId) {
         orderService.cancelOrder(orderId);
