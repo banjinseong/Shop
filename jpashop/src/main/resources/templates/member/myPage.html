@@ -1,0 +1,44 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header" />
+<style>
+ .fieldError {
+ border-color: #bd2130;
+ }
+</style>
+<body>
+<div class="container">
+  <div th:replace="fragments/bodyHeader :: bodyHeader"/>
+    <h2>내 정보</h2>
+  <form role="form" th:action="@{/member/myPage/edit}" th:object="${memberDTO}" method="post">
+      <input type="hidden" th:value="${memberId}" name="memberId" />
+      <div class="form-group">
+        <label th:for="email">이메일 : </label>
+          <input type="hidden" th:value="*{email}" name="email"/>
+          <span th:text="*{email}"/>
+      </div>
+      <br/>
+      <div class="form-group">
+        <label th:for="city">도시 : </label>
+        <input type="text" th:field="*{city}"/>
+      </div>
+      <div class="form-group">
+          <label th:for="street">지역 : </label>
+          <input type="text" th:field="*{street}"/>
+      </div>
+      <div class="form-group">
+          <label th:for="zipcode">우편번호 : </label>
+          <input type="text" th:field="*{zipcode}"/>
+          <button type="submit">수정</button>
+      </div>
+      <br/>
+    </form>
+    <a href="#" th:href="@{/order/{id}/orders (id=${memberId})}" class="btn btn-primary" role="button">개인 주문 내역</a>
+    <button type="button" th:onclick="/member/join">문의사항</button> <br/><br/>
+  <div th:replace="fragments/footer :: footer" />
+
+</div>
+
+</body>
+</html>
+

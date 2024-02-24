@@ -1,5 +1,6 @@
 package jpabook.jpashop.service;
 
+import jpabook.jpashop.domain.Address;
 import jpabook.jpashop.domain.Basket;
 import jpabook.jpashop.domain.Member;
 import jpabook.jpashop.domain.PrincipalDetails;
@@ -41,11 +42,30 @@ public class MemberService {
         });
     }
 
+    @Transactional
+    public void updateMember(MemberDTO dto){
+        Member member = memberRepository.findByEmail(dto.getEmail()).get();
+        member.setAddress(new Address(dto.getCity(), dto.getStreet(), dto.getZipcode()));
+    }
+
 
     public List<Member> findMembers(){
         return memberRepository.findAll();
     }
 
+    public MemberDTO findOne(String email){
+        Member member = memberRepository.findByEmail(email).get();
+        MemberDTO memberDTO = new MemberDTO();
+        memberDTO.setEmail(member.getEmail());
+        memberDTO.setCity(member.getAddress().getCity());
+        memberDTO.setStreet(member.getAddress().getStreet());
+        memberDTO.setZipcode(member.getAddress().getZipcode());
+        return memberDTO;
+    }
 
+    public Long getId(String email) {
+        Member member = memberRepository.findByEmail(email).get();
 
+        return member.getId();
+    }
 }

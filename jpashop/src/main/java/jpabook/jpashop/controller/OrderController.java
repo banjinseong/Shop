@@ -71,6 +71,18 @@ public class OrderController {
     }
 
     /**
+     * 개인 주문 목록 보여주기
+     */
+    @GetMapping("/{memberId}/orders")
+    public String memberOrderList(@PathVariable("memberId") Long memberId,
+                                  Model model){
+        List<Order> orders = orderService.findByMemberId(memberId);
+        model.addAttribute("orders", orders);
+        return "order/myList";
+    }
+
+
+    /**
      * 주문 취소
      */
     @PostMapping(value = "/{orderId}/cancel")

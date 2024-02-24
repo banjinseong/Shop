@@ -18,4 +18,6 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
 
     @Query("SELECT o FROM Order o JOIN FETCH o.member WHERE (:email IS NULL OR o.member.email LIKE %:email%) AND (:status IS NULL OR o.status = :status)")
     List<Order> findByEmailAndStatus(@Param("email") String email, @Param("status") OrderStatus status);
+
+    List<Order> findByMemberId(Long memberId);
 }

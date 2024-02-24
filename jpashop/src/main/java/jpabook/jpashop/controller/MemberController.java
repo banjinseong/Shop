@@ -4,16 +4,16 @@ package jpabook.jpashop.controller;
 import jakarta.validation.Valid;
 import jpabook.jpashop.domain.Address;
 import jpabook.jpashop.domain.Member;
+import jpabook.jpashop.domain.PrincipalDetails;
 import jpabook.jpashop.dto.MemberDTO;
 import jpabook.jpashop.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -75,5 +75,24 @@ public class MemberController {
     public String loginPage(Model model) {
         model.addAttribute("memberDTO", new MemberDTO());
         return "member/login";
+    }
+    /**
+     * 내 정보 페이지 진입
+     */
+    @GetMapping("myPage")
+    public String getMyPage(@AuthenticationPrincipal PrincipalDetails principalDetails,
+                            Model model){
+        String email = principalDetails.getUsername();
+        MemberDTO memberDTO = memberService.findOne(email);
+        Long memberId = memberService.getId(email);
+        model.addAttribute("memberDTO", memberDTO);
+        model.addAttribute("memberId", memberId);
+        return "member/myPage";
+    }
+
+    @PostMapping("/myPage/edit")
+    public String postMyPage(@ModelAttribute("memberDTO") MemberDTO dto){
+        memberService.updateMember(dto);
+        return "redirect:/member/myPage";
     }
 }
