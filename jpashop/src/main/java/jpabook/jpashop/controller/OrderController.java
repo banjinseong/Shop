@@ -81,13 +81,30 @@ public class OrderController {
         return "order/myList";
     }
 
-
     /**
      * 주문 취소
      */
-    @PostMapping(value = "/{orderId}/cancel")
-    public String cancelOrder(@PathVariable("orderId") Long orderId) {
+    @PostMapping(value = "/{orderId}/UserCancel")
+    public String cancelUserOrder(@PathVariable("orderId") Long orderId) {
         orderService.cancelOrder(orderId);
+        return "redirect:/order/" + orderId + "/orders";
+    }
+
+    /**
+     * 관리자 주문 취소
+     */
+    @PostMapping(value = "/{orderId}/AdminCancel")
+    public String cancelAdminOrder(@PathVariable("orderId") Long orderId) {
+        orderService.cancelOrder(orderId);
+        return "redirect:/order/orderList";
+    }
+
+    /**
+     * 배송 완료 변환
+     */
+    @PostMapping(value = "/{orderId}/complete")
+    public String comOrder(@PathVariable("orderId") Long orderId) {
+        orderService.completeOrder(orderId);
         return "redirect:/order/orderList";
     }
 

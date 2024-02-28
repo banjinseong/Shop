@@ -77,6 +77,16 @@ public class OrderService {
     }
 
     /**
+     * 배송 완료
+     */
+    @Transactional
+    public void completeOrder(Long orderId) {
+        Optional<Order> order = orderRepository.findById(orderId);
+        // 배송 완료
+        order.get().complete();
+    }
+
+    /**
      * 검색
      */
 
@@ -91,4 +101,6 @@ public class OrderService {
     public List<Order> findByMemberId(Long memberId) {
         return orderRepository.findByMemberId(memberId);
     }
+
+
 }

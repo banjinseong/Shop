@@ -9,32 +9,17 @@
 <body>
 <div class="container">
   <div th:replace="fragments/bodyHeader :: bodyHeader"/>
-  <h2>내 정보</h2>
     <div class="jumbotron">
-      <h1>HELLO SHOP</h1>
-      <div th:unless="${nickname == null}">
-        <h3>[[${nickname}]]님 환영합니다!</h3>
-      </div>
-      <p class="lead">회원 기능</p>
+      <h1>관리자 페이지</h1>
+      <p class="lead">목록 조회</p>
       <p>
-        <a class="btn btn-lg btn-secondary" href="/member/join">회원 가입</a>
+        <a class="btn btn-lg btn-secondary" href="/item/list">상품 목록</a>
         <a class="btn btn-lg btn-secondary" href="/member/list">회원 목록</a>
-        <a class="btn btn-lg btn-secondary" href="/member/myPage">마이 페이지</a>
       </p>
       <p class="lead">상품 기능</p>
       <p>
         <a class="btn btn-lg btn-dark" href="/item/new">상품 등록</a>
-        <a class="btn btn-lg btn-dark" href="/item/list">상품 목록</a>
-      </p>
-      <p class="lead">주문 기능</p>
-      <p>
-        <a class="btn btn-lg btn-info" href="/order">상품 주문</a>
-        <a class="btn btn-lg btn-info" href="/order/orderList">주문 내역</a>
-      </p>
-      <p>
-        <a class="btn btn-lg btn-info" href="/member/login">로그인</a>
-        <a class="btn btn-lg btn-info" href="/basket/baskets">장바구니</a>
-        <a class="btn btn-lg btn-info" href="/logout">로그아웃</a>
+        <a class="btn btn-lg btn-dark" href="/order/orderList">주문 내역</a>
       </p>
     </div>
 

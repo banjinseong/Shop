@@ -86,6 +86,14 @@ public class Order {
     }
 
     /**
+     * 배송 완료 변환
+     */
+    public void complete() {
+        this.delivery.setStatus(DeliveryStatus.COMP);
+        System.out.println("****"+this.delivery.getStatus());
+    }
+
+    /**
      * 전체 주문 가격 조회
      */
     public int getTotalPrice(){
@@ -95,4 +103,6 @@ public class Order {
         }
         return totalPrice;
     }
+
+
 }

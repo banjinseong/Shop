@@ -31,9 +31,9 @@
         <th>대표상품 이름</th>
         <th>총 주문가격</th>
         <th>대표상품 주문수량</th>
-        <th>상태</th>
         <th>일시</th>
-        <th></th>
+        <th>주문 상태</th>
+        <th>배송 상태</th>
       </tr>
       </thead>
       <tbody>
@@ -55,12 +55,22 @@
         </td>
         <td th:text="${item.getTotalPrice()}"></td>
         <td th:text="${item.ordersItems[0].count}"></td>
-        <td th:text="${item.status}"></td>
         <td th:text="${item.orderDate}"></td>
         <td>
-          <a th:if="${item.status.name() == 'ORDER'}" href="#"
+          <a th:if="${item.status.name() == 'ORDER' and item.delivery.status.name() == 'READY'}" href="#"
              th:href="'javascript:cancel('+${item.id}+')'"
              class="btn btn-danger">CANCEL</a>
+          <span th:unless="${item.status.name() == 'ORDER' and item.delivery.status.name() == 'READY'}">
+              <span th:text="${item.status}"></span>
+          </span>
+        </td>
+        <td>
+          <a th:if="${item.status.name() == 'ORDER' and item.delivery.status.name() == 'READY'}" href="#"
+             th:href="'javascript:complete('+${item.id}+')'"
+             class="btn btn-danger">완료</a>
+          <span th:unless="${item.status.name() == 'ORDER' and item.delivery.status.name() == 'READY'}">
+              <span th:text="${item.delivery.status}"></span>
+          </span>
         </td>
       </tr>
       </tbody>
@@ -73,7 +83,15 @@
  function cancel(id) {
  var form = document.createElement("form");
  form.setAttribute("method", "post");
- form.setAttribute("action", "/order/" + id + "/cancel");
+ form.setAttribute("action", "/order/" + id + "/AdminCancel");
+ document.body.appendChild(form);
+ form.submit();
+ }
+
+ function complete(id) {
+ var form = document.createElement("form");
+ form.setAttribute("method", "post");
+ form.setAttribute("action", "/order/" + id + "/complete");
  document.body.appendChild(form);
  form.submit();
  }

@@ -95,4 +95,11 @@ public class MemberController {
         memberService.updateMember(dto);
         return "redirect:/member/myPage";
     }
+    /**
+     * 관리자 페이지 진입
+     */
+    @GetMapping("adminPage")
+    public String getAdminPage(){
+        return "member/adminPage";
+    }
 }
