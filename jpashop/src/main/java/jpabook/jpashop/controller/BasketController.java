@@ -29,8 +29,12 @@ public class BasketController {
                              Model model){
         String email = principalDetails.getUsername();
         List<BasketItem> basket = basketService.findBasket(email);
+        int total=0;
+        for (BasketItem basketItem : basket){
+            total+=basketItem.getItem().getPrice() * basketItem.getCount();
+        }
         model.addAttribute("baskets", basket);
-
+        model.addAttribute("total", total);
         return "basket/baskets";
     }
 

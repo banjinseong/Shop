@@ -7,33 +7,36 @@
 <body>
 <div class="container">
     <div th:replace="fragments/bodyHeader :: bodyHeader" />
-    <div class="jumbotron">
-        <h1>HELLO SHOP</h1>
-        <div th:unless="${nickname == null}">
-            <h3>[[${nickname}]]님 환영합니다!</h3>
+
+    <section class="py-5">
+        <div class="container px-4 px-lg-5 mt-5">
+            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+
+                <!-- 첫번째 아이템 -->
+                <div class="col mb-5" th:each="item : ${items}">
+                    <div class="card h-100">
+                        <!-- Product image-->
+                        <img class="card-img-top" th:src="@{${item.getImages().get(0).getImgUrl()}}" alt="..." />
+                        <!-- Product details-->
+                        <div class="card-body p-4">
+                            <div class="text-center">
+                                <!-- Product name\-->
+                                <h5 class="fw-bolder" th:text="${item.getName()}">아이템이름</h5>
+                                <!-- Product price-->
+                                <p th:text="|${item.getPrice()} 원|">아이템 가격</p>
+                            </div>
+                        </div>
+                        <!-- Product actions-->
+                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                            <div class="text-center">
+                                <a class="btn btn-outline-dark mt-auto" th:href="@{/item/{id}/view(id=${item.getId()})}">상세보기</a></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
         </div>
-        <p class="lead">회원 기능</p>
-        <p>
-            <a class="btn btn-lg btn-secondary" href="/member/join">회원 가입</a>
-            <a class="btn btn-lg btn-secondary" href="/member/list">회원 목록</a>
-            <a class="btn btn-lg btn-secondary" href="/member/myPage">마이 페이지</a>
-        </p>
-        <p class="lead">상품 기능</p>
-        <p>
-            <a class="btn btn-lg btn-dark" href="/item/new">상품 등록</a>
-            <a class="btn btn-lg btn-dark" href="/item/list">상품 목록</a>
-        </p>
-        <p class="lead">주문 기능</p>
-        <p>
-            <a class="btn btn-lg btn-info" href="/order">상품 주문</a>
-            <a class="btn btn-lg btn-info" href="/order/orderList">주문 내역</a>
-        </p>
-        <p>
-            <a class="btn btn-lg btn-info" href="/member/login">로그인</a>
-            <a class="btn btn-lg btn-info" href="/basket/baskets">장바구니</a>
-            <a class="btn btn-lg btn-info" href="/logout">로그아웃</a>
-        </p>
-    </div>
+    </section>
     <div th:replace="fragments/footer :: footer" />
 </div> <!-- /container -->
 </body>

@@ -35,7 +35,7 @@
             </tr>
             </tbody>
         </table>
-        <button type="submit" class="w-100 btn btn-lg btn-outline-primary">구매하기</button>
+        <button type="submit" class="w-100 btn btn-lg btn-outline-primary" th:text="${total + '원'}">구매하기</button>
     </div>
     </form>
     <div th:replace="fragments/footer :: footer" />
