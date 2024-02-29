@@ -51,11 +51,11 @@ public class SecurityConfig{
                 )
                 .authorizeHttpRequests((authorizeRequests) ->
                         authorizeRequests
-                                .requestMatchers("/order/orderList").hasRole("ADMIN")
+                                /*.requestMatchers("/order/orderList").hasRole("ADMIN")
                                 .requestMatchers("/item/list").hasRole("ADMIN")
                                 .requestMatchers("/member/list").hasRole("ADMIN")
                                 .requestMatchers("/item/new").hasRole("ADMIN")
-                                .requestMatchers("/member/adminPage").hasRole("ADMIN")
+                                .requestMatchers("/member/adminPage").hasRole("ADMIN")*/
                                 .anyRequest().permitAll()
                 )
                 .formLogin((formLogin) ->

@@ -8,6 +8,8 @@ import jpabook.jpashop.repository.ItemRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ResourceUtils;
@@ -38,7 +40,6 @@ public class ItemService {
             directory.mkdirs(); // 폴더 생성
         }
         String directoryPath = directory.getAbsolutePath();
-        System.out.println("*******");
 
         if(!Objects.isNull(multipartFiles)){
             for(MultipartFile file : multipartFiles){
@@ -90,5 +91,9 @@ public class ItemService {
 
     public List<Item> findAll(){
         return itemRepository.findAll();
+    }
+
+    public Page<Item> allItemView(Pageable pageable) {
+        return itemRepository.findAll(pageable);
     }
 }

@@ -7,6 +7,10 @@ import jpabook.jpashop.repository.MemberRepository;
 import jpabook.jpashop.service.ItemService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,17 +28,20 @@ public class HomeController {
     private final ItemService itemService;
 
     @RequestMapping("/")
-    public String home(Model model, Authentication auth){
-        log.info("home controller");
+    public String home(Model model,
+                       @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.ASC) Pageable pageable,
+                       Authentication auth){
 
-        if(auth != null){
-            Optional<Member> member = memberRepository.findByEmail(auth.getName());
-            if (member != null) {
-                model.addAttribute("nickname", member.get().getEmail());
-            }
-        }
-        List<Item> items =itemService.findAll();
+        Page<Item> items = itemService.allItemView(pageable);
+
+        int nowPage = items.getPageable().getPageNumber() + 1;
+        int startPage = Math.max(nowPage - 4, 1);
+        int endPage = Math.min(nowPage + 5, items.getTotalPages());
+
         model.addAttribute("items", items);
+        model.addAttribute("nowPage", nowPage);
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
 
         return "home";
     }
