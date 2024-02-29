@@ -31,9 +31,11 @@ public class OrderController {
      *아이템 주문페이지에서 주문 확인 페이지로 넘어옴
      */
     @PostMapping("orderInsert")
-    public String createForm(Model model,@ModelAttribute OrderItemDTO orderItems){
+    public String createForm(Model model,@ModelAttribute OrderItemDTOList orderItemDTOList){
 
-        model.addAttribute("items",orderItems);
+        List<OrderItemDTO> dto = orderItemDTOList.getItems();
+
+        model.addAttribute("items",dto);
         return "order/orderForm";
     }
 

@@ -36,8 +36,10 @@ public class HomeController {
 
         int nowPage = items.getPageable().getPageNumber() + 1;
         int startPage = Math.max(nowPage - 4, 1);
-        int endPage = Math.min(nowPage + 5, items.getTotalPages());
-
+        int endPage = Math.min(nowPage + 5, items.getTotalPages()) ;
+        if(endPage == 0){
+            endPage=1;
+        }
         model.addAttribute("items", items);
         model.addAttribute("nowPage", nowPage);
         model.addAttribute("startPage", startPage);

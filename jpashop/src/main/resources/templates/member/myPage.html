@@ -34,7 +34,7 @@
       <br/>
     </form>
     <a href="#" th:href="@{/order/{id}/orders (id=${memberId})}" class="btn btn-primary" role="button">개인 주문 내역</a>
-    <button type="button" th:onclick="/member/join">문의사항</button> <br/><br/>
+    <a href="#" th:href="@{/basket/baskets}" class="btn btn-primary" role="button">장바구니</a>
   <div th:replace="fragments/footer :: footer" />
 
 </div>

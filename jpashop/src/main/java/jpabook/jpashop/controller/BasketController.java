@@ -60,6 +60,9 @@ public class BasketController {
                               @AuthenticationPrincipal PrincipalDetails principalDetails,
                               BasketDTO basketDTO) {
         String email = principalDetails.getUsername();
+        if(basketDTO.getCount()==0){
+            basketDTO.setCount(1);
+        }
         basketService.takeIt(email, basketDTO);
         return "redirect:/basket/baskets";
     }

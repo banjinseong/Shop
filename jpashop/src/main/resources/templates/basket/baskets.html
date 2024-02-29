@@ -4,7 +4,7 @@
 <body>
 <div class="container">
     <div th:replace="fragments/bodyHeader :: bodyHeader" />
-    <form role="form" action="/order/orderForm" method="post">
+    <form role="form" th:action="@{/order/orderInsert}" method="post">
     <div>
         <table class="table table-striped">
             <thead>
